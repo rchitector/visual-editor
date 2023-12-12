@@ -10,9 +10,4 @@ class AdminController extends Controller
     {
         return view('visual-editor::admin.index');
     }
-
-    public function scan()
-    {
-
-    }
 }

@@ -2,6 +2,7 @@
 
 namespace Rchitector\VisualEditor\App\Providers;
 
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use Rchitector\VisualEditor\App\Http\Middleware\VisualEditorAdminMiddleware;
 use Rchitector\VisualEditor\App\Http\Middleware\VisualEditorMiddleware;
@@ -17,6 +18,8 @@ class PackageServiceProvider extends ServiceProvider
     {
         $SRC_PATH = __DIR__.'/../../';
 
+        Blade::anonymousComponentPath($SRC_PATH.'components', 'visual-editor');
+
         // Views
         $this->loadViewsFrom($SRC_PATH.'resources/views', 'visual-editor');
 
@@ -30,7 +33,10 @@ class PackageServiceProvider extends ServiceProvider
         // Migrations
         $this->loadMigrationsFrom($SRC_PATH.'database/migrations');
 
-        // Seeds
-        $this->publishes([$SRC_PATH.'database/seeds' => database_path('seeds')], 'seeds');
+        $this->publishes([
+//            $SRC_PATH.'database/seeds' => database_path('seeds'),
+            $SRC_PATH.'config/visual-editor.php' => config_path('visual-editor.php'),
+            // $SRC_PATH.'public/css/tailwind.min.css' => public_path('css/visual-editor/tailwind.min.css'),
+        ], 'laravel-assets');
     }
 }
